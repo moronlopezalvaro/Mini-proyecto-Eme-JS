@@ -15,7 +15,36 @@ const loteIncidentes = [
     { id: 107, descripcion: "Rescate en ascensor bloqueado", gravedad: 2, resuelta: false }
 ];
 
+
 // funciones
+function registrar(mensaje, nivel = 'info') {
+    if (!_DEBUGMODE) {
+        return;
+    }
+
+    switch (nivel) {
+        case 'error':
+            console.error(mensaje);
+            break;
+        case 'warn':
+            console.warn(mensaje);
+            break;
+        default:
+            console.log(mensaje);
+    }
+}
+
+function generarParte(incidente, asignados) {
+    return `
+──────── PARTE DE INCIDENTE ────────
+ID: ${incidente.id}
+Descripción: ${incidente.descripcion}
+Gravedad: ${incidente.gravedad}/5
+Recursos asignados: ${asignados}
+Recursos restantes: ${recursosDisponibles}
+────────────────────────────────────`;
+}
+
 function calcularRecursos(gravedad) {
     if (gravedad === 5) {
         return 2;
@@ -26,41 +55,43 @@ function calcularRecursos(gravedad) {
 function procesarIncidente(incidente) {
     const necesarios = calcularRecursos(incidente.gravedad);
     const asignados = Math.min(necesarios, recursosDisponibles);
+    recursosDisponibles -= asignados;
 
     switch (incidente.gravedad) {
         case 5:
-            console.error(`🚨 ALERTA MÁXIMA 🚨 Incidente #${incidente.id}: ${incidente.descripcion}`);
+            registrar(`ALERTA MÁXIMA Incidente #${incidente.id}: ${incidente.descripcion}`, 'error');
             break;
         case 4:
         case 3:
-            console.warn(`⚠️ Prioridad alta: #${incidente.id} - ${incidente.descripcion}`);
+            registrar(`Prioridad alta: #${incidente.id}`, 'warn');
             break;
         default:
-            console.log(`ℹ️ Prioridad baja: #${incidente.id} - ${incidente.descripcion}`);
+            registrar(`Prioridad baja: #${incidente.id}`);
     }
 
-    recursosDisponibles -= asignados;
-    console.log(`Recursos asignados: ${asignados} | Recursos restantes: ${recursosDisponibles}`);
+    registrar(generarParte(incidente, asignados));
 }
 
 function iniciarSimulacion() {
+    registrar(`Iniciando Eme-JS | Incidentes en cola: ${loteIncidentes.length} | Recursos: ${recursosDisponibles}`);
+
     for (let i = 0; i < loteIncidentes.length; i++) {
         const incidente = loteIncidentes[i];
 
         if (incidente.resuelta === true) {
-            console.log(`Incidente #${incidente.id} ya resuelto. Se ignora.`);
+            registrar(`Incidente #${incidente.id} ya resuelto. Se ignora.`);
             continue;
         }
 
         if (recursosDisponibles <= 0) {
-            console.error(`Sin recursos disponibles. Sistema detenido en el incidente #${incidente.id}.`);
+            registrar(`Sin recursos disponibles. Sistema detenido en el incidente #${incidente.id}.`, 'error');
             break;
         }
 
         procesarIncidente(incidente);
     }
 
-    console.log(`Fin de la simulación. Recursos finales: ${recursosDisponibles}`);
+    registrar(`Fin de la simulación. Recursos finales: ${recursosDisponibles}`);
 }
 
 iniciarSimulacion();
