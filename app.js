@@ -4,10 +4,10 @@
 /**
  * Representa una incidencia recibida en la central de emergencias.
  * @typedef {object} Incidente
- * @property {number} id - Identificador único de la incidencia.
- * @property {string} descripcion - Descripción breve de la emergencia.
- * @property {number} gravedad - Nivel de gravedad, de 1 (leve) a 5 (máxima).
- * @property {boolean} resuelta - Indica si la incidencia ya ha sido resuelta.
+ * @property {number} id Identificador único de la incidencia.
+ * @property {string} descripcion Descripción breve de la emergencia.
+ * @property {number} gravedad Nivel de gravedad, de 1 (leve) a 5 (máxima).
+ * @property {boolean} resuelta Indica si la incidencia ya ha sido resuelta.
  */
 
 // configuracion
@@ -16,6 +16,7 @@
  * @type {boolean}
  */
 const _DEBUGMODE = true;
+
 /**
  * Número de recursos (ambulancias/camiones) disponibles en el parque.
  * @type {number}
@@ -37,12 +38,11 @@ const loteIncidentes = [
     { id: 107, descripcion: "Rescate en ascensor bloqueado", gravedad: 2, resuelta: false }
 ];
 
-
 // funciones
 /**
  * Muestra un mensaje por consola solo si el modo depuración está activo.
- * @param {string} mensaje - Texto que se mostrará por consola.
- * @param {'info'|'warn'|'error'} [nivel='info'] - Nivel del mensaje, que determina el método de consola usado.
+ * @param {string} mensaje Texto que se mostrará por consola.
+ * @param {'info'|'warn'|'error'} [nivel='info'] Nivel del mensaje, que determina el método de consola usado.
  * @returns {void}
  */
 function registrar(mensaje, nivel = 'info') {
@@ -64,8 +64,8 @@ function registrar(mensaje, nivel = 'info') {
 
 /**
  * Genera el parte formateado de un incidente atendido.
- * @param {Incidente} incidente - Incidencia atendida.
- * @param {number} asignados - Recursos asignados a la incidencia.
+ * @param {Incidente} incidente Incidencia atendida.
+ * @param {number} asignados Recursos asignados a la incidencia.
  * @returns {string} Parte del incidente listo para mostrarse por consola.
  */
 function generarParte(incidente, asignados) {
@@ -81,7 +81,7 @@ Recursos restantes: ${recursosDisponibles}
 
 /**
  * Calcula cuántos recursos necesita una incidencia según su gravedad.
- * @param {number} gravedad - Nivel de gravedad de la incidencia (1-5).
+ * @param {number} gravedad Nivel de gravedad de la incidencia (1-5).
  * @returns {number} Recursos necesarios: 2 si la gravedad es 5, 1 en cualquier otro caso.
  */
 function calcularRecursos(gravedad) {
@@ -93,7 +93,7 @@ function calcularRecursos(gravedad) {
 
 /**
  * Atiende una incidencia: asigna recursos, emite la alerta según su gravedad y muestra el parte.
- * @param {Incidente} incidente - Incidencia no resuelta que se va a atender.
+ * @param {Incidente} incidente Incidencia no resuelta que se va a atender.
  * @returns {void}
  */
 function procesarIncidente(incidente) {
