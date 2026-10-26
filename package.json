@@ -1,0 +1,26 @@
+{
+  "name": "mini-proyecto-eme-js",
+  "version": "1.0.0",
+  "description": "**Equipo:** moronlopezalvaro (Driver inicial) & JuanCarlosML94 (Navigator inicial)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moronlopezalvaro/Mini-proyecto-Eme-JS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/moronlopezalvaro/Mini-proyecto-Eme-JS/issues"
+  },
+  "homepage": "https://github.com/moronlopezalvaro/Mini-proyecto-Eme-JS#readme",
+  "devDependencies": {
+    "eslint": "^10.13.0",
+    "eslint-plugin-jsdoc": "^65.4.2"
+  }
+}
