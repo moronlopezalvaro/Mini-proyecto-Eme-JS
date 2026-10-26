@@ -31,7 +31,7 @@ let recursosDisponibles = 4;
 const loteIncidentes = [
     { id: 101, descripcion: "Gato atrapado en un árbol", gravedad: 1, resuelta: false },
     { id: 102, descripcion: "Falsa alarma de humo en local", gravedad: 2, resuelta: true },
-    { id: 103, descripcion: "Incendio estructural en bloque de viviendas", gravedad: 5, resuelta: false },
+    { id: 103, descripcion: "Incendio estructural en bloque de viviendas", gravedad: "5", resuelta: false },
     { id: 104, descripcion: "Contenedor ardiendo en la vía pública", gravedad: 3, resuelta: false },
     { id: 105, descripcion: "Inundación leve de un sótano", gravedad: 2, resuelta: true },
     { id: 106, descripcion: "Accidente de tráfico múltiple en la A-4", gravedad: 5, resuelta: false },
@@ -103,6 +103,7 @@ function procesarIncidente(incidente) {
 
     switch (incidente.gravedad) {
         case 5:
+            if (_DEBUGMODE) { debugger; }
             registrar(`ALERTA MÁXIMA Incidente #${incidente.id}: ${incidente.descripcion}`, 'error');
             break;
         case 4:
@@ -128,11 +129,13 @@ function iniciarSimulacion() {
         const incidente = loteIncidentes[i];
 
         if (incidente.resuelta === true) {
+            if (_DEBUGMODE) { debugger; }
             registrar(`Incidente #${incidente.id} ya resuelto. Se ignora.`);
             continue;
         }
 
         if (recursosDisponibles <= 0) {
+            if (_DEBUGMODE) { debugger; }
             registrar(`Sin recursos disponibles. Sistema detenido en el incidente #${incidente.id}.`, 'error');
             break;
         }
